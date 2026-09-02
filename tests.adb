@@ -1,5 +1,5 @@
 with Ada.Text_IO; use Ada.Text_IO;
-with System.Assertions;
+with Ada.Assertions;
 with Bernstein_Vazirani; use Bernstein_Vazirani;
 
 procedure Tests is
@@ -131,6 +131,7 @@ begin
    begin
       declare
          B : constant Bit_String := From_String ("123");
+         pragma Unreferenced (B);
       begin
          Check ("12.1 Should not reach here", False);
       end;
@@ -146,11 +147,12 @@ begin
       declare
          O : constant Secret_Oracle := Make_Oracle (From_String ("10101010101"));
          R : constant Bit_String := Solve_Quantum_Simulated (11, O);
+         pragma Unreferenced (R);
       begin
          Check ("13.1 Should not reach here", False);
       end;
    exception
-      when System.Assertions.Assert_Failure =>
+      when Ada.Assertions.Assertion_Error =>
          Check ("13.1 Caught precondition assertion for N > 10", True);
          Check ("13.2 Memory explosion prevented", True);
          Check ("13.3 Contract checked successfully", True);
