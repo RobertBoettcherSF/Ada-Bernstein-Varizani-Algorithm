@@ -61,13 +61,13 @@ package body Bernstein_Vazirani is
    end Query;
 
    function Solve_Classical (N : Positive; Oracle : Oracle_Interface'Class) return Bit_String is
-      Result    : Bit_String (1 .. N) := (others => 0);
+      Result    : Bit_String (1 .. N) := [others => 0];
       Query_Str : Bit_String (1 .. N);
    begin
       -- To find the secret, we query the oracle with strings containing a single '1'
       -- at each position to reveal the secret bit-by-bit.
       for I in 1 .. N loop
-         Query_Str := (others => 0);
+         Query_Str := [others => 0];
          Query_Str (I) := 1;
          Result (I) := Oracle.Query (Query_Str);
       end loop;
@@ -79,7 +79,7 @@ package body Bernstein_Vazirani is
       Num_States : constant Natural  := 2 ** Num_Qubits;
       
       type Amplitude_Array is array (Natural range <>) of Float;
-      State      : Amplitude_Array (0 .. Num_States - 1) := (others => 0.0);
+      State      : Amplitude_Array (0 .. Num_States - 1) := [others => 0.0];
       Inv_Sqrt_2 : constant Float := 1.0 / Ada.Numerics.Elementary_Functions.Sqrt (2.0);
 
       -- Helper to extract the input bits (x) corresponding to an integer state
