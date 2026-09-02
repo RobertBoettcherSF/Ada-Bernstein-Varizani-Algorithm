@@ -27,15 +27,14 @@ package Bernstein_Vazirani is
 
    -- 1. Classical Deterministic Variant
    -- Requires N queries to deduce an N-bit secret string.
-   function Solve_Classical (N : Positive; Oracle : Oracle_Interface'Class) return Bit_String
-     with Pre => N > 0;
+   function Solve_Classical (N : Positive; Oracle : Oracle_Interface'Class) return Bit_String;
 
    -- 2. Quantum Simulator Variant
    -- Conceptually requires exactly 1 query by evaluating the quantum circuit 
    -- state vector through Hadamard transforms and phase kickback.
    -- Limited to N <= 10 to keep state vector memory (2^(N+1)) well within limits.
    function Solve_Quantum_Simulated (N : Positive; Oracle : Oracle_Interface'Class) return Bit_String
-     with Pre => N > 0 and N <= 10;
+     with Pre => N <= 10;
 
 private
    type Secret_Oracle (N : Positive) is new Oracle_Interface with record
